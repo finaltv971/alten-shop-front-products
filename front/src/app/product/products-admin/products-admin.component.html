@@ -1,0 +1,167 @@
+<div class="tableContainer">
+    <p-card >
+        <button pButton pRipple icon="pi pi-times" label="new" (click)='afficherModal()' class="p-button-success"> </button>
+        <span class="mr-2"></span>
+        <button pButton pRipple icon="pi pi-trash" label="Delete" (click)='vider()' severity="secondary"> </button>
+
+    </p-card>
+
+    <p-dialog header="Creer un produit" [modal]="true" [(visible)]="modalVisible" [style]="{ width: '25rem' }">
+      <div class="flex align-items-center gap-3 mb-3">
+          <label for="code" class="font-semibold w-6rem">Code</label>
+          <input pInputText id="code" class="flex-auto" [(ngModel)]="product.code" autocomplete="off" />
+      </div>
+      <div class="flex align-items-center gap-3 mb-3">
+          <label for="name" class="font-semibold w-6rem">Name</label>
+          <input pInputText id="name" class="flex-auto" [(ngModel)]="product.name" autocomplete="off" />
+      </div>
+      <div class="flex align-items-center gap-3 mb-3">
+          <label for="description" class="font-semibold w-6rem">Description</label>
+          <input pInputText id="description" class="flex-auto" [(ngModel)]="product.description" autocomplete="off" />
+      </div>
+      <div class="flex align-items-center gap-3 mb-3">
+          <label for="image" class="font-semibold w-6rem">Image</label>
+          <input pInputText id="image" class="flex-auto" [(ngModel)]="product.image" autocomplete="off" />
+      </div>
+      <div class="flex align-items-center gap-3 mb-3">
+          <label for="price" class="font-semibold w-6rem">Price</label>
+          <input pInputText id="price" class="flex-auto" [(ngModel)]="product.price" autocomplete="off" />
+      </div>
+      <div class="flex align-items-center gap-3 mb-3">
+          <label for="category" class="font-semibold w-6rem">Category</label>
+          <input pInputText id="category" class="flex-auto" [(ngModel)]="product.category" autocomplete="off" />
+      </div>
+      <div class="flex align-items-center gap-3 mb-3">
+          <label for="quantity" class="font-semibold w-6rem">Quantity</label>
+          <input pInputText id="quantity" class="flex-auto" [(ngModel)]="product.quantity" autocomplete="off" />
+      </div>
+      <div class="flex align-items-center gap-3 mb-3">
+        <label for="inventoryStatus" class="font-semibold w-6rem">Inventory Status</label>
+        <select id="inventoryStatus" pInputText class="flex-auto" [(ngModel)]="product.inventoryStatus" autocomplete="off">
+          <option *ngFor="let valeur of inventoryStatusValeurs" [value]="valeur">{{ valeur }}</option>
+        </select>
+      </div>
+
+
+      <div class="flex align-items-center gap-3 mb-3">
+          <label for="rating" class="font-semibold w-6rem">Rating</label>
+          <input pInputText id="rating" class="flex-auto" [(ngModel)]="product.rating" autocomplete="off" />
+      </div>
+      <div class="flex justify-content-end gap-2">
+          <p-button label="Cancel" severity="secondary" (click)="afficherModal()"></p-button>
+          <p-button label="Save" (click)="ajouter()"></p-button>
+      </div>
+    </p-dialog>
+
+
+
+    <p-table [value]="mesProduitsTelecharges"
+        styleClass="p-datatable-gridlines p-datatable-striped"
+        [paginator]="true"
+        [rows]="5"
+        editMode="row"
+        [tableStyle]="{ 'min-width': '50rem' }"
+        [globalFilterFields]="['code','name']"
+        [rowsPerPageOptions]="[10, 20]">
+
+        <ng-template pTemplate="header">
+            <tr>
+                <th style="width: 4rem; text-align: 'center';"><p-tableHeaderCheckbox></p-tableHeaderCheckbox></th>
+                <th pSortableColumn="code">Code <p-sortIcon field="code"></p-sortIcon></th>
+                <th pSortableColumn="name">Name <p-sortIcon field="name"></p-sortIcon></th>
+                <th>Actions</th>
+            </tr>
+            <tr>
+                <th></th>
+                <th>
+                    <p-columnFilter
+                        type="text"
+                        field="code"
+                        placeholder="recherche par code"
+                        ariaLabel="recherche code"></p-columnFilter>
+                </th>
+                <th>
+                    <p-columnFilter
+                        type="text"
+                        field="name"
+                        placeholder="recherche par name"
+                        ariaLabel="recherche name"></p-columnFilter>
+                </th>
+                <th></th>
+            </tr>
+        </ng-template>
+
+        <ng-template pTemplate="body" let-produit  let-editing="editing" let-i="index" >
+            <tr [pEditableRow]="produit">
+                <td style="width: 4rem; text-align: 'center';">
+                    <p-tableCheckbox [value]="produit"></p-tableCheckbox>
+                </td>
+
+                <td>
+                    <p-cellEditor>
+                        <ng-template pTemplate="input">
+                            <input
+                                pInputText
+                                type="text"
+                                [(ngModel)]="produit.code" />
+                        </ng-template>
+                        <ng-template pTemplate="output">
+                            {{produit.code}}
+                        </ng-template>
+                    </p-cellEditor>
+
+
+                </td>
+                <td>
+
+                    <p-cellEditor>
+                        <ng-template pTemplate="input">
+                            <input
+                                pInputText
+                                type="text"
+                                [(ngModel)]="produit.name" />
+                        </ng-template>
+                        <ng-template pTemplate="output">
+                            {{produit.name}}
+                        </ng-template>
+                    </p-cellEditor>
+                </td>
+                <td>
+                    <div class="flex align-items-center justify-content-center gap-2">
+                        <button
+                            *ngIf="!modifiable"
+                            pButton
+                            pRipple
+                            type="button"
+                            pInitEditableRow
+                            icon="pi pi-pencil"
+                            (click)="modifier(produit)"
+                            class="p-button-rounded p-button-text">
+                        </button>
+                        <button
+                            *ngIf="!modifiable"
+                            pButton pRipple
+                            type="button"
+                            pCancelEditableRow
+                            icon="pi pi-times"
+                            (click)="supprimer(produit,i)"
+                            class="p-button-rounded p-button-text p-button-danger">
+                        </button>
+                        <button
+                            *ngIf="modifiable"
+                            pButton
+                            pRipple
+                            type="button"
+                            pSaveEditableRow
+                            icon="pi pi-check"
+                            (click)="enregistrer(produit,i)"
+                            class="p-button-rounded p-button-text p-button-success mr-2">
+                        </button>
+                    </div>
+
+
+                </td>
+            </tr>
+        </ng-template>
+    </p-table>
+</div>

@@ -1,0 +1,53 @@
+.tableContainer{
+    margin-top: 200px;
+    margin-left: 300px;
+    margin-right: 300px;
+}
+
+
+.p-dialog .p-dialog-content {
+  padding: 20px;
+  background-color: #f9f9f9;
+  border-radius: 8px;
+}
+
+.flex {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 10px;
+
+  label {
+    flex: 0 0 100px;
+    font-weight: bold;
+    color: #333;
+  }
+
+  input, select {
+    flex: 1;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    &:focus {
+      border-color: #007bff;
+      box-shadow: 0 0 8px rgba(0, 123, 255, 0.5);
+    }
+  }
+}
+.p-dialog .p-dialog-footer {
+  display: flex;
+  justify-content: flex-end;
+  padding: 10px 20px;
+  gap: 10px;
+
+  .p-button {
+    min-width: 100px;
+  }
+}
+.p-dialog .p-button-label {
+  color: #fff;
+  background-color: #007bff;
+  &:hover {
+    background-color: darken(#007bff, 10%);
+  }
+}

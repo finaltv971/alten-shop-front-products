@@ -1,0 +1,31 @@
+
+::ng-deep .p-dataview-grid .p-dataview-content > div {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+}
+
+#card {
+  display: flex;
+  justify-content: center;
+  align-content: center;
+  width: auto;
+  margin-top: 150px ;
+  margin-bottom: 150px ;
+
+}
+
+.product-grid-item .product-price {
+  color: #007bff;
+}
+
+::ng-deep .p-dataview-content .grid > .ng-star-inserted{
+  border-radius: 10px;
+  margin: 10px;
+  padding: 10px;
+  border: 1px solid lightgray;
+}
+
+.product-grid-item-content{
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
